@@ -67,7 +67,9 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:id="@+id/event_location"
@@ -82,7 +84,10 @@
                         android:id="@+id/pick_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/event_location_pick" />
+                        android:background="@color/colorPrimary"
+                        android:padding="10dp"
+                        android:text="@string/event_location_pick"
+                        android:textColor="@android:color/white" />
                 </FrameLayout>
             </LinearLayout>
 
@@ -103,14 +108,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:gravity="start|center"
-                    android:text="@string/event_change_poster" />
+                    android:background="@android:color/transparent"
+                    android:gravity="start|bottom"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:text="@string/event_change_poster"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -132,8 +143,10 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="@string/event_send_invite"
+        android:textColor="@android:color/white"
         android:textSize="20sp" />
 
 </LinearLayout>
