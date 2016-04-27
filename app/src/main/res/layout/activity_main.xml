@@ -43,7 +43,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="date"
+                    android:inputType="date|text"
                     android:textSize="20sp"
                     tools:hint="Mon, Apr 25, 2016" />
 
@@ -94,25 +94,17 @@
             <RelativeLayout
                 android:id="@+id/event_poster"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/eggs"
-                    android:contentDescription="@null"
-                    android:scaleType="center" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/eggs">
 
                 <Button
+                    android:id="@+id/change_poster"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:background="@android:color/transparent"
                     android:gravity="start|bottom"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="10dp"
-                    android:paddingStart="10dp"
+                    android:padding="10dp"
                     android:text="@string/event_change_poster"
                     android:textStyle="bold" />
 
@@ -143,6 +135,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="@string/event_send_invite"
