@@ -127,6 +127,7 @@
         android:layout_marginTop="@dimen/horizontal_margin"
         android:background="@color/colorPrimary"
         android:gravity="center"
+        android:onClick="sendEvent"
         android:text="@string/event_send_invite"
         android:textColor="@android:color/white"
         android:textSize="@dimen/title_size" />

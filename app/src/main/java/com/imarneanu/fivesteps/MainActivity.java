@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
@@ -32,12 +34,17 @@ public class MainActivity extends AppCompatActivity {
     private final int SELECT_PHOTO = 1;
     private final int SELECT_LOCATION = 2;
 
+    // Thu, Apr 28, 2016
+    private final static String REGEX_TIME = "[M|T|W|F|S][a-z]{2},\\s[J|F|M|A|J|S|O|N|D][a-z]{2}\\s\\d{1,2},\\s\\d{4}";
+
+    private EditText mEventTitle;
     private EditText mEventDate;
     private Spinner mEventTime;
     private TextView mEventLocation;
     private Button mPickLocation;
     private RelativeLayout mEventPoster;
     private Button mChangePoster;
+    private EditText mEventAgenda;
 
     private int mScreenWidth;
 
@@ -54,12 +61,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        mEventTitle = (EditText) findViewById(R.id.event_title);
         mEventDate = (EditText) findViewById(R.id.event_date);
         mEventTime = (Spinner) findViewById(R.id.event_time);
         mEventLocation = (TextView) findViewById(R.id.event_location);
         mPickLocation = (Button) findViewById(R.id.pick_location);
         mEventPoster = (RelativeLayout) findViewById(R.id.event_poster);
         mChangePoster = (Button) findViewById(R.id.change_poster);
+        mEventAgenda = (EditText) findViewById(R.id.event_agenda);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -68,9 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupView() {
-        SimpleDateFormat sdf = new SimpleDateFormat("E, MMM dd, yyyy", Locale.ENGLISH);
-        String currentDate = sdf.format(new Date());
-        mEventDate.setHint(currentDate);
+        mEventDate.setHint(getCurrentDate());
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.time_array, android.R.layout.simple_spinner_item);
@@ -126,6 +133,38 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void sendEvent(View view) {
+        validateData();
+    }
+
+    private boolean validateData() {
+        if (TextUtils.isEmpty(mEventTitle.getText())) {
+            Toast.makeText(this, "Please set event title", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (TextUtils.isEmpty(mEventDate.getText())) {
+            Toast.makeText(this, "Please set event date", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!mEventDate.getText().toString().matches(REGEX_TIME)) {
+            Toast.makeText(this, "Please use the " + getCurrentDate() + " format", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (TextUtils.isEmpty(mEventLocation.getText())) {
+            Toast.makeText(this, "Please set event location", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (TextUtils.isEmpty(mEventAgenda.getText())) {
+            mEventAgenda.setText("To be added");
+        }
+        return true;
+    }
+
+    private String getCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("E, MMM dd, yyyy", Locale.ENGLISH);
+        return sdf.format(new Date());
+    }
+
     private BitmapDrawable decodeUri(Uri selectedImage) throws FileNotFoundException {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -153,4 +192,5 @@ public class MainActivity extends AppCompatActivity {
         return new BitmapDrawable(getResources(), BitmapFactory.decodeStream(
                 getContentResolver().openInputStream(selectedImage), null, options));
     }
+
 }
