@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mChangePoster;
     private EditText mEventAgenda;
 
+    private Uri mSelectedPosterUri;
     private int mScreenWidth;
 
     private Activity mContext;
@@ -114,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case SELECT_PHOTO:
                 if (resultCode == RESULT_OK) {
-                    Uri selectedImage = data.getData();
+                    mSelectedPosterUri = data.getData();
                     try {
-                        mEventPoster.setBackground(decodeUri(selectedImage));
+                        mEventPoster.setBackground(decodeUri(mSelectedPosterUri));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -167,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_SUBJECT, "HOT NEW EVENT");
         intent.putExtra(Intent.EXTRA_TEXT, getEventBody());
+        if (mSelectedPosterUri != null) {
+            intent.putExtra(Intent.EXTRA_STREAM, mSelectedPosterUri);
+        }
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
