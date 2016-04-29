@@ -134,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendEvent(View view) {
-        validateData();
+        if (validateData()) {
+            sendEmail();
+        }
     }
 
     private boolean validateData() {
@@ -155,9 +157,27 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         if (TextUtils.isEmpty(mEventAgenda.getText())) {
-            mEventAgenda.setText("To be added");
+            mEventAgenda.setText(getText(R.string.event_agenda_to_be_added));
         }
         return true;
+    }
+
+    private void sendEmail() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_SUBJECT, "HOT NEW EVENT");
+        intent.putExtra(Intent.EXTRA_TEXT, getEventBody());
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    private String getEventBody() {
+        return mEventTitle.getText()
+                + "\n\nLocation: " + mEventDate.getText() + ", " + mEventTime.getSelectedItem().toString()
+                + "\n\t\t" + mEventLocation.getText()
+                + "\nAgenda:" + mEventAgenda.getText();
     }
 
     private String getCurrentDate() {

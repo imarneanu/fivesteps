@@ -8,6 +8,8 @@
     <string name="event_agenda">Agenda:</string>
     <string name="event_agenda_hint">Set event description/agenda</string>
     <string name="event_send_invite">Send e-vite</string>
+    
+    <string name="event_agenda_to_be_added">To be added</string>
 
     <string-array name="time_array">
         <item>12:00 AM</item>
