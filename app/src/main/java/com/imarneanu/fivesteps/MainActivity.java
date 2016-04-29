@@ -150,8 +150,7 @@ public class MainActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(mEventDate.getText())) {
             Toast.makeText(this, "Please set event date", Toast.LENGTH_SHORT).show();
             return false;
-        }
-        if (!mEventDate.getText().toString().matches(REGEX_TIME)) {
+        } else if (!mEventDate.getText().toString().matches(REGEX_TIME)) {
             Toast.makeText(this, "Please use the " + getCurrentDate() + " format", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -189,10 +188,6 @@ public class MainActivity extends AppCompatActivity {
                 .append("<br>").append(location).append("</p>")
                 .append("<p><b>Agenda: </b><br>").append(agenda)
                 .toString());
-//        return mEventTitle.getText()
-//                + "\n\nLocation: " + mEventDate.getText() + ", " + mEventTime.getSelectedItem().toString()
-//                + "\n\t\t" + mEventLocation.getText()
-//                + "\nAgenda:" + mEventAgenda.getText();
     }
 
     private String getCurrentDate() {
