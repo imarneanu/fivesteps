@@ -8,6 +8,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.Display;
 import android.view.View;
@@ -177,11 +179,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String getEventBody() {
-        return mEventTitle.getText()
-                + "\n\nLocation: " + mEventDate.getText() + ", " + mEventTime.getSelectedItem().toString()
-                + "\n\t\t" + mEventLocation.getText()
-                + "\nAgenda:" + mEventAgenda.getText();
+    private Spanned getEventBody() {
+        String location = mEventLocation.getText().toString().replace("\n", "<br>");
+        String agenda = mEventAgenda.getText().toString().replace("\n", "<br>");
+        return Html.fromHtml(new StringBuilder()
+                .append("<h1>").append(mEventTitle.getText()).append("</h1>")
+                .append("<p><b>Location: </b>").append(mEventDate.getText())
+                .append(", ").append(mEventTime.getSelectedItem().toString())
+                .append("<br>").append(location).append("</p>")
+                .append("<p><b>Agenda: </b><br>").append(agenda)
+                .toString());
+//        return mEventTitle.getText()
+//                + "\n\nLocation: " + mEventDate.getText() + ", " + mEventTime.getSelectedItem().toString()
+//                + "\n\t\t" + mEventLocation.getText()
+//                + "\nAgenda:" + mEventAgenda.getText();
     }
 
     private String getCurrentDate() {
